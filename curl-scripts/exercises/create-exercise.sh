@@ -4,9 +4,9 @@ curl "http://localhost:4741/exercises" \
   --include \
   --request POST \
   --header "Content-Type: application/json" \
+  --header "Authorization: Token token=${TOKEN}" \
   --data '{
     "exercise": {
-      "user_id": "'"${USER_ID}"'",
       "date": "'"${DATE}"'",
       "muscle_group": "'"${MUSCLE}"'",
       "exercise": "'"${EXERCISE}"'",

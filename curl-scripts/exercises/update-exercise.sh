@@ -2,9 +2,9 @@ curl http://localhost:4741/exercises/${ID} \
   --request PATCH \
   --include \
   --header 'Content-Type: application/json' \
+  --header "Authorization: Token token=${TOKEN}" \
   --data '{
     "exercise": {
-      "user_id": "'"${USER_ID}"'",
       "date": "'"${DATE}"'",
       "muscle_group": "'"${MUSCLE}"'",
       "exercise": "'"${EXERCISE}"'",

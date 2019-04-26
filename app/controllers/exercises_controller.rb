@@ -1,4 +1,4 @@
-class ExercisesController < ApplicationController
+class ExercisesController < OpenReadController
   before_action :set_exercise, only: [:show, :update, :destroy]
 
   # GET /exercises
@@ -10,15 +10,17 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1
   def show
+    @exercises = Exercise.find(params[:id])
+
     render json: @exercise
   end
 
   # POST /exercises
   def create
-    @exercise = Exercise.new(exercise_params)
+    @exercise = current_user.exercises.new(exercise_params)
 
     if @exercise.save
-      render json: @exercise, status: :created, location: @exercise
+      render json: @exercise, status: :created
     else
       render json: @exercise.errors, status: :unprocessable_entity
     end
@@ -41,11 +43,11 @@ class ExercisesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_exercise
-      @exercise = Exercise.find(params[:id])
+      @exercise = current_user.exercises.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def exercise_params
-      params.require(:exercise).permit(:users_id, :date, :muscle_group, :exercise, :description, :time, :reps, :weight)
+      params.require(:exercise).permit(:user_id, :date, :muscle_group, :exercise, :description, :time, :reps, :weight)
     end
 end
