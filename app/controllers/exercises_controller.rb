@@ -17,7 +17,7 @@ class ExercisesController < OpenReadController
 
   # POST /exercises
   def create
-    @exercise = current_user.exercises.new(exercise_params)
+    @exercise = current_user.exercises.build(exercise_params)
 
     if @exercise.save
       render json: @exercise, status: :created
@@ -37,17 +37,18 @@ class ExercisesController < OpenReadController
 
   # DELETE /exercises/1
   def destroy
+    set_exercise
     @exercise.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_exercise
-      @exercise = current_user.exercises.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_exercise
+    @exercise = current_user.exercises.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def exercise_params
-      params.require(:exercise).permit(:user_id, :date, :muscle_group, :exercise, :description, :time, :reps, :weight)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def exercise_params
+    params.require(:exercise).permit(:date, :muscle_group, :exercise, :description, :time, :reps, :weight, :user_id)
+  end
 end
