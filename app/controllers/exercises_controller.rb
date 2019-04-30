@@ -1,16 +1,16 @@
-class ExercisesController < OpenReadController
+class ExercisesController < ProtectedController
   before_action :set_exercise, only: [:show, :update, :destroy]
 
   # GET /exercises
   def index
-    @exercises = Exercise.all
+    @exercises = current_user.exercises.all
 
     render json: @exercises
   end
 
   # GET /exercises/1
   def show
-    @exercises = Exercise.find(params[:id])
+    @exercises = current_user.exercises.find(params[:id])
 
     render json: @exercise
   end
